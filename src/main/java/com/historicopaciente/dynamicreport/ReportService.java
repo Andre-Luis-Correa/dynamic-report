@@ -9,6 +9,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.*;
 import net.sf.jasperreports.engine.type.HorizontalAlignEnum;
+import net.sf.jasperreports.engine.type.HorizontalImageAlignEnum;
 import net.sf.jasperreports.engine.type.HorizontalTextAlignEnum;
 import net.sf.jasperreports.engine.type.ScaleImageEnum;
 import org.springframework.stereotype.Service;
@@ -168,13 +169,17 @@ public class ReportService {
 
         //Criar o componente de imagem
         JRDesignImage image = new JRDesignImage(null);
-        image.setScaleImage(ScaleImageEnum.RETAIN_SHAPE);
-        String fld = "$P{LOGO}";
+        image.setX(0); // Posição horizontal
+        image.setY(0); // Posição vertical
+        image.setWidth(50); // Largura da imagem
+        image.setHeight(50); // Altura da imagem
+        image.setScaleImage(ScaleImageEnum.RETAIN_SHAPE); // Escala para manter proporção
+        image.setHorizontalImageAlign(HorizontalImageAlignEnum.CENTER);
+
         JRDesignExpression expressionImg = new JRDesignExpression();
-        expression.setText(fld);
+        expressionImg.setText("$P{LOGO}"); // Parâmetro que conterá o caminho ou os dados binários da imagem
         image.setExpression(expressionImg);
-        image.setPrintWhenDetailOverflows(false);
-        band = new JRDesignBand();
+
         band.setHeight(50);
         band.addElement(image);
 
